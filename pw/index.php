@@ -1,11 +1,25 @@
 <?php
+/*
+Farriz Brilliant Wichaksana
+203040177
+Pertemuan 2
+*/
+?>
+
+<?php
 
 require 'functions.php';
-$buku = query("SELECT * FROM buku");
 
-// ketika tombol cari diklik
+
+// $row = mysqli_fecth_row($result); array numerik
+// $row = mysqli_fecth_assoc($result); array associative
+// $row = mysqli_fecth_array($result); array keduanya
+// tampung ke variabel mahasiswa
+$bk = query("SELECT * FROM buku");
+
+// ketika tombol cari dikembalikan
 if (isset($_POST['cari'])) {
-  $buku = cari($_POST['keyword']);
+  $bk = cari($_POST['keyword']);
 }
 
 ?>
@@ -15,58 +29,91 @@ if (isset($_POST['cari'])) {
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Buku</title>
+  <link rel ="stylesheet" type="text/css" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <title>Daftar Koleksi Buku</title>
 </head>
 
 <body>
 
-  <h3>Daftar Buku</h3>
+  <h3 align="center">DAFTAR KOLEKSI BUKU BUKU</h3>
 
-  <a href="tambah.php">Tambah Data Buku</a>
-  <br><br>
+  <div class="container">
+    <form action="" method="POST">
+      <div class="row mb-4">
+        <div class="col">
+          <div class="form-outline">
+            <br><br>
+            <input type="text" name="keyword" id="form3Example1" class="form-control float-end" placeholder="Cari....."></input><br><br>
+            <button type="submit" class="btn btn-primary btn-block" name="cari">Cari
+              <i data-feather="search" me-2></i>
+            </button>
+            <br>
+            <a type="button" class="btn btn-primary btn-floating float-end" href="tambah.php">Tambah
+              <i data-feather="plus-square" me-2></i>
+            </a>
+          </div>
+        </div>
+    </form>
+  </div>
 
-  <form action="" method="POST">
-    <input type="text" name="keyword" size="40" placeholder="masukkan keyword pencarian.." autocomplete="off" autofocus>
-    <button type="submit" name="cari">Cari!</button>
-  </form>
-  <br>
 
-  <table border="1" cellpadding="10" cellspacing="0">
-    <tr>
-      <th>#</th>
-      <th>Gambar</th>
-      <th>Judul</th>
-      <th>Penulis</th>
-      <th>Penerbit</th>
-      <th>Tahun</th>
-      <th>Aksi</th>
-    </tr>
 
-    <?php if (empty($buku)) : ?>
+
+  <div class="container">
+    <table border="1" cellpadding="10" cellspacing="0" class="table table-hover">
+
       <tr>
-        <td colspan="4">
-          <p style="color: red; font-style: italic;">data buku tidak ditemukan!</p>
-        </td>
+        <th>No</th>
+        <th>Gambar</th>
+        <th>Judukl Buku</th>
+        <th>Pengarang</th>
+        <th>Tahun Terbit</th>
+        <th>Jumlah Halaman</th>
+        <th>Aksi</th>
       </tr>
-    <?php endif; ?>
 
-    <?php $i = 1;
-    foreach ($buku as $m) : ?>
-      <tr>
-        <td><?= $i++; ?></td>
-        <td><img src="img/<?= $m['gambar']; ?>" width="60"></td>
-        <td><?= $m['judul']; ?></td>
-        <td><?= $m['penulis']; ?></td>
-        <td><?= $m['penerbit']; ?></td>
-        <td><?= $m['tahun']; ?></td>
-        <td>
-          <a href="detail.php?id=<?= $b['id']; ?>">Lihat Detail</a>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-  </table>
 
+      <?php if (empty($bk)) : ?>
+        <tr>
+          <td colspan="4">
+            <p style="color: red; font-style: italic;">data buku tidak ditemukan!</p>
+          </td>
+        </tr>
+      <?php endif; ?>
+
+      <?php $i = 1;
+      foreach ($bk as $b) : ?>
+        <tr>
+          <td class="align-middle"><?= $i++; ?></td>
+          <td class="align-middle"><img src="img/<?= $b['gambar']; ?>" width="120"></td>
+          <td class="align-middle"><?= $b['judul_buku']; ?></td>
+          <td class="align-middle"><?= $b['pengarang']; ?></td>
+          <td class="align-middle"><?= $b['tahun_terbit']; ?></td>
+          <td class="align-middle"><?= $b['jumlah_halaman']; ?></td>
+
+          <td class="align-middle">
+            <a type="button" class="btn btn-primary btn-floating" href="ubah.php?id=<?= $b['id']; ?>">Ubah
+              <i data-feather="edit" me-2></i>
+            </a>
+
+            <a type="button" class="btn btn-danger btn-floating" href="hapus.php?id=<?= $b['id']; ?>">Hapus
+              <i data-feather="trash" me-2></i>
+            </a>
+
+
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
+  </div>
+
+  <script>
+    feather.replace()
+  </script>
 </body>
 
 </html>

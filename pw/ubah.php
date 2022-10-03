@@ -18,7 +18,7 @@ $m = query("SELECT * FROM buku WHERE id = $id");
 if (isset($_POST['ubah'])) {
   if (ubah($_POST) > 0) {
     echo "<script>
-            alert('data berhasil diubah!');
+            alert('data berhasil diubah');
             document.location.href = 'index.php';
          </script>";
   } else {
@@ -27,58 +27,57 @@ if (isset($_POST['ubah'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <title>Ubah Data Buku</title>
 </head>
 
 <body>
-
-  <h3>Form Ubah Data Buku</h3>
-
-  <form action="" method="POST">
+  <h3 align="center">Form Ubah Data Buku</h3>
+  <br>
+  <form action="" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $m['id']; ?>">
-    <ul>
-      <li>
-      <label>
-          Judul :
-          <input type="text" name="judul" autofocus required>
-        </label>
-      </li>
-      <li>
-        <label>
-          Penulis :
-          <input type="text" name="penulis" required>
-        </label>
-      </li>
-      <li>
-        <label>
-          Penerbit :
-          <input type="text" name="penerbit" required>
-        </label>
-      </li>
-      <li>
-        <label>
-          Tahun :
-          <input type="text" name="tahun" required>
-        </label>
-      </li>
-      <li>
-        <label>
-          Gambar :
-          <input type="text" name="gambar" required value="<?= $m['gambar']; ?>">
-        </label>
-      </li>
-      <li>
-        <button type="submit" name="ubah">Ubah Data!</button>
-      </li>
-    </ul>
+
+
+    <div class="container">
+      <div class="form-row">
+        <div class="col">
+          <input type="text" name="judul_buku" class="form-control" placeholder="Judul Buku" autofocus required value="<?= $m['judul_buku']; ?>">
+        </div>
+        <br>
+        <div class="col">
+          <input type="text" name="pengarang" class="form-control" placeholder="Pengarang" required value="<?= $m['pengarang']; ?>">
+        </div>
+        <br>
+        <div class="col">
+          <input type="text" name="tahun_terbit" class="form-control" placeholder="Tahun Terbit" required value="<?= $m['tahun_terbit']; ?>">
+        </div>
+        <br>
+        <div class="col">
+          <input type="text" name="jumlah_halaman" class="form-control" placeholder="Jumlah Halaman" required required value="<?= $m['jumlah_halaman']; ?>">
+        </div>
+        <br>
+      </div>
+
+      <div class="card" style="width:12rem;">
+        <input type="hidden" name="gambar_lama" value="<?= $m['gambar']; ?>">
+        <img src="img/<?= $m['gambar']; ?>" style="display: block;" class="img-preview" class="card-img" alt="...">
+        <div class="card-body">
+          <input type="file" name="gambar" class="gambar" onchange="previewImage()">
+        </div>
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <input class="btn btn-dark float-right" type="submit" value="Ubah" name="ubah">
+      </div>
+
   </form>
+
+  <script src="script.js"></script>
 
 </body>
 
