@@ -64,7 +64,7 @@ if (isset($_POST['cari'])) {
 
 
   <div class="container">
-    <table border="1" cellpadding="10" cellspacing="0" class="table table-hover">
+    <table border="1" cellpadding="10" cellspacing="0" align = "center" class="table table-hover">
 
       <tr>
         <th>No</th>
